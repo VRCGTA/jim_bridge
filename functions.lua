@@ -665,8 +665,8 @@ function setThirst(src, thirst)
 		TriggerClientEvent('esx_status:add', src, 'thirst', thirst)
 	elseif GetResourceState(QBExport):find("start") or GetResourceState(QBXExport):find("start") then
 		local Player = Core.Functions.GetPlayer(src)
-		Player.Functions.SetMetaData('thirst', thirst)
-		TriggerClientEvent("hud:client:UpdateNeeds", src, thirst, Player.PlayerData.metadata.thirst)
+		Player.Functions.SetThirst(thirst)
+		TriggerClientEvent("hud:client:UpdateNeeds", src, thirst, Player.Functions.GetThirst())
 	end
 end
 
@@ -675,8 +675,8 @@ function setHunger(src, hunger)
 		TriggerClientEvent('esx_status:add', src, 'hunger', hunger)
 	elseif GetResourceState(QBExport):find("start") or GetResourceState(QBXExport):find("start") then
 		local Player = Core.Functions.GetPlayer(src)
-		Player.Functions.SetMetaData('hunger', hunger)
-		TriggerClientEvent("hud:client:UpdateNeeds", src, hunger, Player.PlayerData.metadata.hunger)
+		Player.Functions.SetHunger(hunger)
+		TriggerClientEvent("hud:client:UpdateNeeds", src, hunger, Player.Functions.GetHunger())
 	end
 end
 
@@ -702,10 +702,10 @@ function ConsumeSuccess(itemName, type)
 		end
 	else
 		if Items[itemName].hunger then
-			TriggerServerEvent(GetCurrentResourceName()..":server:setNeed", "hunger", Core.Functions.GetPlayerData().metadata["hunger"] + Items[itemName].hunger)
+			TriggerServerEvent(GetCurrentResourceName()..":server:setNeed", "hunger", Core.Functions.GetPlayerData().condition.hunger + Items[itemName].hunger)
 		end
 		if Items[itemName].thirst then
-			TriggerServerEvent(GetCurrentResourceName()..":server:setNeed", "thirst", Core.Functions.GetPlayerData().metadata["thirst"] + Items[itemName].thirst)
+			TriggerServerEvent(GetCurrentResourceName()..":server:setNeed", "thirst", Core.Functions.GetPlayerData().condition.thirst + Items[itemName].thirst)
 		end
 	end
 	if type == "alcohol" then alcoholCount += 1
