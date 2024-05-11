@@ -666,7 +666,7 @@ function setThirst(src, thirst)
 	elseif GetResourceState(QBExport):find("start") or GetResourceState(QBXExport):find("start") then
 		local Player = Core.Functions.GetPlayer(src)
 		Player.Functions.SetThirst(thirst)
-		TriggerClientEvent("hud:client:UpdateNeeds", src, thirst, Player.Functions.GetThirst())
+		TriggerClientEvent("hud:client:UpdateNeeds", src, Player.Functions.GetHunger(), thirst)
 	end
 end
 
